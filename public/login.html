@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsBerry Login</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+    <link rel="manifest" href="./img/site.webmanifest">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            color: #3b4a54;
+        }
+
+        .header {
+            padding: 38px 0 0 38px;
+            background: #f0f2f5;
+        }
+
+        .whatsapp-logo {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 500;
+            color: #41525d;
+            fill: #25d366;
+        }
+
+        .logo-icon {
+            width: 39px;
+            height: 39px;
+            margin-right: 13px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 150px);
+            padding: 38px;
+        }
+
+        .login-card {
+            background: white;
+            border: 1px solid #e9edef;
+            border-radius: 12px;
+            padding: 48px;
+            max-width: 1120px;
+            width: 100%;
+            display: flex;
+            gap: 64px;
+            align-items: flex-start;
+            min-height: 500px;
+        }
+
+        .left-section {
+            flex: 1;
+        }
+
+        .steps-title {
+            font-size: 32px;
+            font-weight: 300;
+            color: #111b21;
+            margin-bottom: 32px;
+        }
+
+        .steps-list {
+            list-style: none;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            font-size: 17px;
+            color: #3b4a54;
+            line-height: 1.4;
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #e9edef;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: 500;
+            color: #667781;
+            margin-right: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .whatsapp-green {
+            color: #25d366;
+            font-weight: 500;
+        }
+
+        .step-bold {
+            font-weight: 500;
+            color: #111b21;
+        }
+
+        .right-section {
+            width: 360px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .qr-container {
+            width: 264px;
+            height: 264px;
+            border: 1px solid #e9edef;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            background: #f8f9fa;
+        }
+
+        .qr-container img {
+            width: 240px;
+            height: 240px;
+            border-radius: 8px;
+        }
+
+        .qr-loading {
+            color: #8696a0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #25d366;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stay-logged {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #3b4a54;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #25d366;
+            border-radius: 2px;
+            background: #25d366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 32px;
+            color: #8696a0;
+            font-size: 14px;
+        }
+
+        .privacy-text {
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            color: #8696a0;
+            flex-shrink: 0;
+        }
+
+        .lock-icon {
+            font-size: 12px;
+        }
+
+        .connected-section {
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .success-icon {
+            font-size: 48px;
+            color: #25d366;
+            margin-bottom: 16px;
+        }
+
+        .connected-title {
+            font-size: 20px;
+            color: #2e7d32;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .phone-display {
+            background: white;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-bottom: 16px;
+        }
+
+        .final-instruction {
+            color: #2e7d32;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .start-new-btn {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .start-new-btn:hover {
+            background: #128c7e;
+        }
+
+        .start-new-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .error-display {
+            color: #f44336;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .session-info {
+            font-size: 12px;
+            color: #8696a0;
+            margin-top: 16px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 900px) {
+            .login-card {
+                flex-direction: column;
+                gap: 32px;
+                text-align: center;
+            }
+
+            .right-section {
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 16px;
+            }
+
+            .login-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="header">
+    <div class="whatsapp-logo">
+      <svg version="1.1" viewBox="0 0 2048 2048" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+        <path transform="translate(992,252)" d="m0 0h70l42 3 40 5 39 7 39 9 41 12 32 11 37 15 26 12 34 17 24 14 20 12 24 16 17 12 21 16 16 13 13 11 10 9 8 7 15 14 26 26 7 8 13 14 9 11 11 13 10 13 12 16 14 20 13 20 13 21 14 25 15 29 13 28 11 27 11 30 10 31 10 38 8 37 6 37 4 35 3 46v50l-3 47-4 34-6 37-8 37-9 34-12 38-14 37-11 25-16 34-12 22-13 23-12 19-16 24-10 14-12 16-11 14-11 13-9 11-14 15-7 8-35 35-8 7-11 10-11 9-13 11-13 10-16 12-20 14-20 13-28 17-24 13-27 14-31 14-36 14-38 13-36 10-40 9-41 7-35 4-24 2-19 1h-59l-32-2-46-5-36-6-37-8-31-8-38-12-30-11-31-13-36-17-19-10-11 2-347 91-46 12-3-1 18-66 22-80 24-88 23-84 21-76-2-5-15-28-14-28-13-30-13-34-12-36-8-28-9-39-6-32-6-46-3-40v-75l3-41 6-45 8-42 10-40 11-36 11-31 14-34 13-28 12-24 13-23 10-17 14-22 13-19 13-18 14-18 9-11 11-13 12-14 16-17 31-31 8-7 11-10 11-9 13-11 13-10 19-14 20-14 17-11 21-13 25-14 29-15 28-13 32-13 36-13 41-12 28-7 35-7 40-6 28-3zm15 129-34 2-42 5-38 7-40 10-35 11-34 13-29 13-28 14-24 14-20 12-19 13-18 13-14 11-11 9-14 12-12 11-8 7-25 25-7 8-9 10-9 11-14 17-13 18-10 14-11 17-15 25-12 22-14 28-13 31-11 30-10 32-8 32-7 36-5 37-2 23-1 20v47l2 32 4 35 6 35 9 38 9 31 10 29 14 34 13 28 12 22 13 23 15 23 4 7-1 9-18 66-25 91-18 66v4l17-4 221-58 4 1 16 9 17 10 24 13 29 14 37 15 35 12 37 10 32 7 31 5 38 4 37 2h24l38-2 38-4 35-6 36-8 31-9 35-12 27-11 26-12 22-11 23-13 24-15 19-13 19-14 14-11 13-11 11-9 8-8 8-7 28-28 7-8 9-10 9-11 13-16 13-18 12-17 12-19 13-22 13-24 14-29 15-37 12-36 8-28 8-35 6-37 4-38 1-17v-61l-3-40-6-42-8-38-8-30-12-37-12-30-13-29-11-22-13-23-11-18-16-24-13-18-11-14-9-11-12-14-24-26-15-15-8-7-14-13-11-9-17-14-19-14-33-22-15-9-21-12-36-18-33-14-34-12-30-9-28-7-37-7-38-5-23-2-21-1z"/>
+        <path transform="translate(1233,1108)" d="m0 0h141l20 3 20 6 13 7 11 9 6 7 5 9 5 13 1 7v21l-2 12-5 14-7 12-9 10-10 9-14 8-14 6-18 5-16 3-28 2h-132l-2-1 1-10 9-42 7-31 8-38 8-37z"/>
+        <path transform="translate(887,1206)" d="m0 0 142 1 19 3 16 5 16 8 11 9 7 9 7 14 3 15v17l-3 16-5 13-7 12-11 12-12 9-15 8-18 6-25 5-13 1-145 1-3-1v-7l12-55 13-60 8-37z"/>
+        <path transform="translate(601,953)" d="m0 0h140l21 3 15 4 17 8 10 8 7 7 8 14 4 13 1 18-2 16-5 16-8 13-10 12-12 9-11 6-8 4-19 6-15 3-19 2h-149v-8l3-10 17-79 7-31 6-28z"/>
+        <path transform="translate(1281,854)" d="m0 0h141l20 3 17 5 16 8 11 9 9 12 5 11 2 6 1 8v19l-3 16-5 12-6 11-11 12-8 7-14 8-11 5-21 6-18 3-9 1h-151l1-10 9-43 8-36 14-64 2-8z"/>
+        <path transform="translate(934,953)" d="m0 0h139l21 3 15 4 16 8 9 6 9 9 8 13 4 14 1 8v12l-2 15-4 12-6 12-7 9-12 12-13 8-12 6-19 6-15 3-19 2h-148l-1-4 6-27 9-41 10-47 8-38z"/>
+        <path transform="translate(644,712)" d="m0 0h166l8 3 13 5 12 7 7 6v2l4 2 7 11 5 12 2 9v23l-4 17-5 12-9 13-10 10-10 7-15 8-18 6-18 4-17 2-19 1h-131l-1-1 1-10 24-112z"/>
+        <path transform="translate(976,712)" d="m0 0h166l16 6 14 7 11 9 8 10 6 13 3 12v23l-3 14-5 13-7 11-9 10-9 8-13 8-20 8-23 5-17 2-18 1h-131l-2-1 1-9 10-47 12-55z"/>
+        </svg>
+      &nbsp;WhatsBerry
+    </div>
+  </div>
+
+    <div class="main-container">
+        <div class="login-card">
+            <div class="left-section">
+                <h1 class="steps-title">Steps to log in</h1>
+                <ol class="steps-list">
+                    <li class="step-item">
+                        <div class="step-number">1</div>
+                        <div>Open <span class="whatsapp-green"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+            </svg> WhatsApp</span> on your phone</div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-number">2</div>
+                        <div>On Android tap <span class="step-bold">Menu ⋮</span> On iPhone tap <span class="step-bold">Settings ⚙</span></div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-number">3</div>
+                        <div>Tap <span class="step-bold">Linked devices</span>, then <span class="step-bold">Link device</span></div>
+                    </li>
+                    <li class="step-item">
+                        <div class="step-number">4</div>
+                        <div>Scan the QR code to confirm</div>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="right-section">
+                <div class="api-key-section" id="api-key-section">
+                    <label for="api-key-input" style="display: block; margin-bottom: 8px; font-size: 14px; color: #3b4a54; font-weight: 500;">Server API Key</label>
+                    <input type="password" id="api-key-input" placeholder="Enter your server API key" style="width: 100%; padding: 12px; border: 1px solid #e9edef; border-radius: 8px; font-size: 14px; margin-bottom: 16px;">
+                    <button id="connect-btn" class="start-new-btn" onclick="connectWithApiKey()" style="width: 100%; margin-top: 0;">Connect</button>
+                </div>
+
+                <div class="qr-container" style="display: none;">
+                    <div id="qr-display" class="qr-loading">
+                        <div class="spinner"></div>
+                        Connecting to server...
+                    </div>
+                </div>
+
+                <div class="stay-logged">
+                    <div class="checkbox-container">
+
+                    </div>
+                </div>
+
+                <div id="connected-section" class="connected-section" style="display: none;">
+                    <div class="success-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                        </svg>
+                    </div>
+                    <div class="connected-title">Successfully Connected!</div>
+                    <div class="phone-display" id="phone-number">+1234567890</div>
+                    <div class="final-instruction">
+                        <strong>In WhatsBerry:</strong><br>
+                        Use this phone number in WhatsBerry to access your messages and chats.
+                    </div>
+                    <button class="start-new-btn" onclick="startNewSession()">Start Another Session</button>
+                    
+                    <div class="session-info" id="session-info">
+                        <div>Session ID: <span id="session-id">Loading...</span></div>
+                        <div>User ID: <span id="user-id">Loading...</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="privacy-text">
+        ⚠️ This is an unofficial project. WhatsApp does not support bots or third-party clients.
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // WWeb.js Multi-User Client Integration
+        class WWebClient {
+            constructor(serverUrl = window.location.origin) {
+                this.serverUrl = serverUrl;
+                this.socket = null;
+                this.sessionId = null;
+                this.userId = null;
+                this.isConnected = false;
+                this.sessionJoined = false;
+                this.qrReceived = false;
+                this.apiKey = null;
+
+                // Try to load API key from localStorage
+                const savedApiKey = localStorage.getItem('whatsberry_api_key');
+                if (savedApiKey) {
+                    this.apiKey = savedApiKey;
+                }
+
+                this.initializeSocket();
+            }
+
+            initializeSocket() {
+                this.socket = io(this.serverUrl);
+                
+                this.socket.on('connect', () => {
+                    console.log('Connected to WhatsBerry server at', new Date().toISOString());
+                    this.isConnected = true;
+                    this.updateStatus('Connected to server');
+
+                    // Send ping to test connection
+                    this.socket.emit('ping');
+                });
+
+                this.socket.on('disconnect', (reason) => {
+                    console.log('Disconnected from server:', reason);
+                    this.isConnected = false;
+                    this.updateStatus(`Disconnected from server: ${reason}`, 'error');
+                });
+
+                this.socket.on('pong', (data) => {
+                    console.log('🏓 Pong received from server:', data);
+                });
+
+                this.socket.on('session_joined', (data) => {
+                    console.log('Successfully joined session room:', data);
+                    this.sessionJoined = true;
+                });
+
+                this.socket.on('qr', (qrCode) => {
+                    this.qrReceived = true;
+                    this.displayQRCode(qrCode);
+                });
+
+                this.socket.on('authenticated', () => {
+                    console.log('WhatsApp authenticated');
+                    this.updateStatus('Authenticated! Getting ready...');
+                });
+
+                this.socket.on('ready', (data) => {
+                    console.log('WhatsApp ready:', data);
+                    this.showSuccess(data);
+                });
+
+                this.socket.on('auth_failure', (error) => {
+                    console.error('Authentication failed:', error);
+                    this.showError('Authentication failed: ' + error);
+                });
+
+                this.socket.on('disconnected', (reason) => {
+                    console.log('WhatsApp disconnected:', reason);
+                    this.showError('WhatsApp disconnected: ' + reason);
+                });
+
+                this.socket.on('session_destroyed', () => {
+                    console.log('Session destroyed');
+                    this.showError('Session expired. Please start a new session.');
+                });
+
+                // Enhanced debugging events
+                this.socket.on('state_change', (data) => {
+                    console.log('WhatsApp state changed:', data);
+                    this.updateStatus(`State: ${data.state}`);
+                });
+
+                this.socket.on('session_status', (data) => {
+                    console.log('Session status received:', data);
+                });
+
+                this.socket.on('error', (error) => {
+                    console.error('Socket error:', error);
+                    this.showError('Connection error: ' + error.message);
+                });
+
+                // Add connection timeout handling
+                this.socket.on('connect_error', (error) => {
+                    console.error('Connection error:', error);
+                    this.showError('Failed to connect to server: ' + error.message);
+                });
+
+                this.socket.on('reconnect', (attemptNumber) => {
+                    console.log('Reconnected after', attemptNumber, 'attempts');
+                    this.updateStatus('Reconnected to server');
+                });
+
+                this.socket.on('reconnect_error', (error) => {
+                    console.error('Reconnection failed:', error);
+                    this.showError('Reconnection failed: ' + error.message);
+                });
+            }
+
+            async createSession() {
+                try {
+                    console.log('[CREATE-SESSION] Starting session creation...');
+                    console.log('[CREATE-SESSION] Server URL:', this.serverUrl);
+
+                    // Collect device information
+                    const deviceInfo = {
+                        userAgent: navigator.userAgent,
+                        platform: navigator.platform,
+                        language: navigator.language,
+                        screen: `${screen.width}x${screen.height}`,
+                        timestamp: Date.now(),
+                        // Add BlackBerry-specific info if available
+                        deviceType: 'BlackBerry',
+                        appVersion: '1.0.0'
+                    };
+
+                    console.log('[CREATE-SESSION] Making fetch request to /create-session');
+                    const headers = {
+                        'Content-Type': 'application/json'
+                    };
+
+                    if (this.apiKey) {
+                        headers['X-API-Key'] = this.apiKey;
+                    }
+
+                    const response = await fetch(`${this.serverUrl}/create-session`, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({ deviceInfo })
+                    });
+
+                    console.log('[CREATE-SESSION] Response status:', response.status);
+                    console.log('[CREATE-SESSION] Response headers:', [...response.headers.entries()]);
+
+                    const data = await response.json();
+                    console.log('[CREATE-SESSION] Response data:', data);
+                    
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Failed to create session');
+                    }
+
+                    this.sessionId = data.sessionId;
+                    this.userId = data.userId;
+
+                    console.log(`Session created with ID: ${this.sessionId}, now joining session room...`);
+
+                    // Small delay to ensure session is fully created on server
+                    await new Promise(resolve => setTimeout(resolve, 100));
+
+                    // Join session room for real-time events
+                    this.sessionJoined = false;
+                    this.socket.emit('join_session', this.sessionId);
+
+                    // Wait for session join confirmation with timeout
+                    const joinTimeout = new Promise((_, reject) => {
+                        setTimeout(() => reject(new Error('Session join timeout')), 5000);
+                    });
+
+                    const waitForJoin = new Promise(resolve => {
+                        const checkJoin = () => {
+                            if (this.sessionJoined) {
+                                resolve();
+                            } else {
+                                setTimeout(checkJoin, 50);
+                            }
+                        };
+                        checkJoin();
+                    });
+
+                    await Promise.race([waitForJoin, joinTimeout]);
+
+                    console.log('Session created:', data);
+                    return data;
+                } catch (error) {
+                    console.error('Error creating session:', error);
+                    throw error;
+                }
+            }
+
+            async startSession() {
+                if (!this.sessionId) {
+                    throw new Error('No session ID available');
+                }
+
+                try {
+                    const headers = {
+                        'Content-Type': 'application/json'
+                    };
+
+                    if (this.apiKey) {
+                        headers['X-API-Key'] = this.apiKey;
+                    }
+
+                    const response = await fetch(`${this.serverUrl}/start-session/${this.sessionId}`, {
+                        method: 'POST',
+                        headers: headers
+                    });
+
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Failed to start session');
+                    }
+
+                    console.log('Session started successfully');
+                    return data;
+                } catch (error) {
+                    console.error('Error starting session:', error);
+                    throw error;
+                }
+            }
+
+            async logout() {
+                if (!this.sessionId) {
+                    return;
+                }
+
+                try {
+                    this.socket.emit('leave_session', this.sessionId);
+
+                    const headers = {
+                        'Content-Type': 'application/json'
+                    };
+
+                    if (this.apiKey) {
+                        headers['X-API-Key'] = this.apiKey;
+                    }
+
+                    const response = await fetch(`${this.serverUrl}/session/${this.sessionId}/logout`, {
+                        method: 'POST',
+                        headers: headers
+                    });
+
+                    this.sessionId = null;
+                    this.userId = null;
+
+                    console.log('Logged out successfully');
+                } catch (error) {
+                    console.error('Error logging out:', error);
+                }
+            }
+
+            updateStatus(message, type = '') {
+                const qrDisplay = document.getElementById('qr-display');
+                let icon = '';
+                
+                if (type === 'error') {
+                    icon = '❌ ';
+                } else if (type === 'success') {
+                    icon = '✅ ';
+                } else {
+                    icon = '<div class="spinner"></div>';
+                }
+                
+                qrDisplay.innerHTML = `
+                    <div class="qr-loading ${type === 'error' ? 'error-display' : ''}">
+                        ${icon}
+                        ${message}
+                    </div>
+                `;
+            }
+
+            displayQRCode(qrCode) {
+                const qrDisplay = document.getElementById('qr-display');
+                qrDisplay.innerHTML = `<img src="${qrCode}" alt="WhatsApp QR Code" />`;
+            }
+
+            showSuccess(data) {
+                // Hide QR container and show success section
+                document.querySelector('.qr-container').style.display = 'none';
+                document.querySelector('.stay-logged').style.display = 'none';
+                
+                const connectedSection = document.getElementById('connected-section');
+                const phoneNumber = document.getElementById('phone-number');
+                const sessionInfo = document.getElementById('session-info');
+                const sessionIdSpan = document.getElementById('session-id');
+                const userIdSpan = document.getElementById('user-id');
+                
+                // Format phone number
+                let displayNumber = data.phoneNumber;
+                if (displayNumber && !displayNumber.startsWith('+')) {
+                    displayNumber = '+' + displayNumber;
+                }
+                
+                phoneNumber.textContent = displayNumber || 'Connected (phone number not detected)';
+                sessionIdSpan.textContent = this.sessionId || 'N/A';
+                userIdSpan.textContent = this.userId || 'N/A';
+                
+                connectedSection.style.display = 'block';
+                
+                // Store session info
+                localStorage.setItem('whatsapp_session', JSON.stringify({
+                    sessionId: this.sessionId,
+                    userId: this.userId,
+                    phoneNumber: data.phoneNumber,
+                    name: data.name,
+                    timestamp: Date.now()
+                }));
+            }
+
+            showError(message) {
+                this.updateStatus(message + '<br><button class="start-new-btn" onclick="window.whatsappClient.startNewSession()" style="margin-top: 10px;">Try Again</button>', 'error');
+            }
+
+            async startNewSession(retryCount = 0) {
+                const maxRetries = 3;
+
+                try {
+                    // Reset UI
+                    document.getElementById('connected-section').style.display = 'none';
+                    document.querySelector('.qr-container').style.display = 'flex';
+                    document.querySelector('.stay-logged').style.display = 'flex';
+
+                    // Reset QR received flag only on first attempt
+                    if (retryCount === 0) {
+                        this.qrReceived = false;
+                    }
+
+                    const retryText = retryCount > 0 ? ` (Attempt ${retryCount + 1}/${maxRetries + 1})` : '';
+                    this.updateStatus(`Creating new session...${retryText}`);
+
+                    // Create a new session if this is the first attempt OR if sessionId is null
+                    if (retryCount === 0 || !this.sessionId) {
+                        // Logout current session if exists
+                        if (this.sessionId) {
+                            await this.logout();
+                        }
+
+                        // Create and start new session with timeout
+                        console.log(`Starting session creation attempt ${retryCount + 1}`);
+
+                        const timeoutPromise = new Promise((_, reject) => {
+                            setTimeout(() => reject(new Error('Session creation timeout')), 30000);
+                        });
+
+                        await Promise.race([
+                            this.createSession(),
+                            timeoutPromise
+                        ]);
+
+                        this.updateStatus(`Starting WhatsApp connection...${retryText}`);
+
+                        await Promise.race([
+                            this.startSession(),
+                            timeoutPromise
+                        ]);
+
+                        // After starting session, request QR code if available
+                        setTimeout(() => {
+                            if (this.sessionId) {
+                                console.log(`Requesting QR code for session: ${this.sessionId}`);
+                                this.socket.emit('request_qr', this.sessionId);
+                            } else {
+                                console.error('Cannot request QR: sessionId is null');
+                            }
+                        }, 1000);
+                    } else {
+                        // For retries, ensure we're still connected to the session room
+                        this.updateStatus(`Waiting for existing session...${retryText}`);
+
+                        // Re-join session room to ensure connection
+                        if (!this.sessionId) {
+                            throw new Error('Cannot retry: No session ID available');
+                        }
+
+                        this.sessionJoined = false;
+                        console.log(`Re-joining session room with ID: ${this.sessionId}`);
+                        this.socket.emit('join_session', this.sessionId);
+
+                        // Wait for session join confirmation
+                        const joinTimeout = new Promise((_, reject) => {
+                            setTimeout(() => reject(new Error('Session rejoin timeout')), 5000);
+                        });
+
+                        const waitForJoin = new Promise(resolve => {
+                            const checkJoin = () => {
+                                if (this.sessionJoined) {
+                                    resolve();
+                                } else {
+                                    setTimeout(checkJoin, 50);
+                                }
+                            };
+                            checkJoin();
+                        });
+
+                        await Promise.race([waitForJoin, joinTimeout]);
+
+                        // Request QR code after rejoining
+                        setTimeout(() => {
+                            if (this.sessionId) {
+                                console.log(`Requesting QR code for session (retry): ${this.sessionId}`);
+                                this.socket.emit('request_qr', this.sessionId);
+                            } else {
+                                console.error('Cannot request QR on retry: sessionId is null');
+                            }
+                        }, 500);
+                    }
+
+                    this.updateStatus(`Waiting for QR code...${retryText}`);
+
+                    // Set a timeout for QR code generation
+                    setTimeout(() => {
+                        if (!document.querySelector('.qr-container img') && !this.qrReceived) {
+                            console.log('QR code not received within 15 seconds');
+                            if (retryCount < maxRetries) {
+                                console.log(`Retrying with existing session (attempt ${retryCount + 1})`);
+                                this.startNewSession(retryCount + 1);
+                            } else {
+                                this.showError('QR code generation failed after multiple attempts. Please refresh the page and try again.');
+                            }
+                        } else if (this.qrReceived) {
+                            console.log('QR code already received, no retry needed');
+                        }
+                    }, 15000);
+
+                } catch (error) {
+                    console.error(`Error starting session (attempt ${retryCount + 1}):`, error);
+
+                    if (retryCount < maxRetries) {
+                        console.log(`Retrying due to error: ${error.message}`);
+                        setTimeout(() => {
+                            this.startNewSession(retryCount + 1);
+                        }, 2000); // Wait 2 seconds before retry
+                    } else {
+                        this.showError(`Failed after ${maxRetries + 1} attempts: ${error.message}`);
+                    }
+                }
+            }
+        }
+
+        // Initialize client and auto-start session
+        window.whatsappClient = new WWebClient();
+
+        // Function to connect with API key
+        function connectWithApiKey() {
+            const apiKeyInput = document.getElementById('api-key-input');
+            const apiKey = apiKeyInput.value.trim();
+
+            if (!apiKey) {
+                alert('Please enter your API key');
+                return;
+            }
+
+            // Save API key
+            window.whatsappClient.apiKey = apiKey;
+            localStorage.setItem('whatsberry_api_key', apiKey);
+
+            // Hide API key section, show QR container
+            document.getElementById('api-key-section').style.display = 'none';
+            document.querySelector('.qr-container').style.display = 'flex';
+
+            // Start session
+            window.whatsappClient.startNewSession();
+        }
+
+        // Auto-start session when page loads (if API key is saved)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Clear any old session data from localStorage
+            localStorage.removeItem('whatsapp_session');
+            console.log('Cleared old session data');
+
+            // Check if API key is already saved
+            const savedApiKey = localStorage.getItem('whatsberry_api_key');
+            if (savedApiKey) {
+                // Hide API key section, show QR container
+                document.getElementById('api-key-section').style.display = 'none';
+                document.querySelector('.qr-container').style.display = 'flex';
+
+                // Auto-start new session after a brief delay
+                setTimeout(() => {
+                    window.whatsappClient.startNewSession();
+                }, 1000);
+            }
+        });
+
+        // Global function for start new session button
+        function startNewSession() {
+            window.whatsappClient.startNewSession();
+        }
+
+        // Allow Enter key to submit API key
+        document.addEventListener('DOMContentLoaded', () => {
+            const apiKeyInput = document.getElementById('api-key-input');
+            if (apiKeyInput) {
+                apiKeyInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        connectWithApiKey();
+                    }
+                });
+            }
+        });
+
+        // Handle page unload
+        window.addEventListener('beforeunload', () => {
+            if (window.whatsappClient && window.whatsappClient.socket) {
+                window.whatsappClient.socket.disconnect();
+            }
+        });
+    </script>
+    <!-- Buy Me a Coffee Widget -->
+    <script data-name="BMC-Widget"
+          data-cfasync="false"
+          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+          data-id="danzkigg"
+          data-description="Support WhatsBerry Buy me a coffee!"
+          data-message="Support WhatsBerry!"
+          data-color="#25d366"
+          data-position="Right"
+          data-x_margin="18"
+          data-y_margin="18">
+    </script>
+</body>
+</html>
