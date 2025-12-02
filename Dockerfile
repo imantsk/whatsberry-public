@@ -1,10 +1,8 @@
-# Use Node.js 18 LTS as base image
+# Production image based on Node.js 18 LTS (Debian slim)
 FROM node:18-slim
 
-# Install dependencies for Puppeteer and FFmpeg
-RUN apt-get update && apt-get install -y \
-    wget \
-    gnupg \
+# Install runtime deps for Puppeteer (Chromium) and FFmpeg
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     fonts-liberation \
     libasound2 \
@@ -34,14 +32,15 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install Node.js dependencies
-RUN npm ci --only=production
+# Install production dependencies only
+RUN npm ci --omit=dev
 
 # Copy application files
 COPY . .
 
 # Create directories for WhatsApp session data
-RUN mkdir -p /app/.wwebjs_auth /app/.wwebjs_cache
+RUN mkdir -p /app/.wwebjs_auth /app/.wwebjs_cache /app/.cache/puppeteer \
+    && chown -R node:node /app
 
 # Expose the application port
 EXPOSE 3000
@@ -49,6 +48,15 @@ EXPOSE 3000
 # Set environment variables
 ENV NODE_ENV=production
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+# Helpful in containerized environments; whatsapp-web.js sets args, but keep safe defaults
+ENV PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox"
+
+# Run as non-root for security
+USER node
+
+# Basic healthcheck to ensure server is responding
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+  CMD node -e "require('http').request({host:'127.0.0.1',port:3000,path:'/'},r=>{if(r.statusCode<500)process.exit(0);process.exit(1)}).on('error',()=>process.exit(1)).end()" || exit 1
 
 # Start the application
 CMD ["npm", "start"]
