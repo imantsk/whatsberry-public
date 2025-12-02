@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxrandr2 \
     xdg-utils \
     ffmpeg \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Tell Puppeteer to use system Chromium
@@ -60,7 +61,7 @@ USER node
 
 # Basic healthcheck to ensure server is responding
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
-  CMD node -e "require('http').request({host:'127.0.0.1',port:3000,path:'/'},r=>{if(r.statusCode<500)process.exit(0);process.exit(1)}).on('error',()=>process.exit(1)).end()" || exit 1
+  CMD curl -f http://localhost:3000/health || exit 1
 
 # Start the application
 CMD ["npm", "start"]
