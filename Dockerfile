@@ -1,8 +1,9 @@
 # Production image based on Node.js 18 LTS (Debian slim)
 FROM node:18-slim
 
-# Install runtime deps for Puppeteer (Chromium) and FFmpeg
+# Install system Chromium (arm64-compatible), runtime deps, and FFmpeg
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    chromium \
     ca-certificates \
     fonts-liberation \
     libasound2 \
@@ -26,13 +27,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
+# Tell Puppeteer to use system Chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
 # Create app directory
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies only
+# Install dependencies
 RUN npm ci --omit=dev
 
 # Copy application files
@@ -47,7 +52,6 @@ EXPOSE 3000
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
 # Helpful in containerized environments; whatsapp-web.js sets args, but keep safe defaults
 ENV PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox"
 
