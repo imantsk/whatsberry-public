@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  whatsberry:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: whatsberry-server
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - API_KEY=${API_KEY:-your_secure_api_key_here}
+      - NODE_ENV=production
+    volumes:
+      # Persist WhatsApp session data
+      - whatsberry-sessions:/app/.wwebjs_auth
+      - whatsberry-cache:/app/.wwebjs_cache
+      # Optional: Mount logs directory
+      - ./logs:/app/logs
+    security_opt:
+      - seccomp:unconfined
+    shm_size: '2gb'
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/stats', (r) => {process.exit(r.statusCode === 200 || r.statusCode === 401 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  whatsberry-sessions:
+    driver: local
+  whatsberry-cache:
+    driver: local
