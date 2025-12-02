@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: whatsberry-server
     restart: unless-stopped
     expose:
       - "3000"
@@ -28,6 +27,12 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - coolify
+
+networks:
+  coolify:
+    external: true
 
 volumes:
   whatsberry-sessions:
