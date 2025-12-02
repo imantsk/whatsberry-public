@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
     container_name: whatsberry-server
     restart: unless-stopped
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     environment:
       - PORT=3000
       - API_KEY=${API_KEY:-your_secure_api_key_here}
